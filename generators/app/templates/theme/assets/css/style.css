@@ -1,0 +1,153 @@
+/* ====== YOUR THEME NAME ====== */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/* === wdReset === */
+a, abbr, acronym, address, applet, area, article, aside, audio, b, base, basefont, bdo, big, blockquote, body, br, button, canvas, caption, center, cite, code, colgroup, command, datalist, dd, del, details, dfn, dir, div, dl, dt, em, embed, fieldset, figcaption, figure, font, footer, form, frameset, footer, h1, h2, h3, h4, h5, h6, head, header, hgroup, hr, html, i, iframe, img, input, ins, keygen, kbd, label, legend, li, link, map, mark, menu, meta, meter, nav, noframes, noscript, object, ol, optgroup, option, output, p, param, pre, progress, q, rp, rt, ruby, s, samp, script, section, select, small, source, span, strike, strong, style, sub, summury, sup, table, tbody, td, textarea, tfoot, th, thead, time, title, tr, tt, u, ul, var, video, wbr, xmp {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: none;
+  font-weight: normal;
+  text-align: left;
+  line-height: 1;
+  text-decoration: none; }
+
+html {
+  overflow-y: scroll; }
+
+body {
+  -webkit-font-smoothing: antialiased; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+ul, ol {
+  list-style: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+input[type="radio"] {
+  vertical-align: text-bottom; }
+
+input[type="checkbox"] {
+  vertical-align: bottom; }
+
+input[type=button], input[type=submit], button {
+  cursor: pointer; }
+
+strong {
+  font-weight: bold; }
+
+img {
+  display: block;
+  height: auto; }
+
+/* === Styles === */
+/* ----- global ----- */
+html, body {
+  width: 100%;
+  height: 100%;
+  font: 14px arial, sans-serif; }
+
+/* ----- typography ----- */
+/* - headings - */
+h1 {
+  font-size: 32px; }
+
+h2 {
+  font-size: 24px; }
+
+h3 {
+  font-size: 20px; }
+
+h4 {
+  font-size: 18px; }
+
+h5 {
+  font-size: 16px; }
+
+h6 {
+  font-size: 14px; }
+
+.content p {
+  line-height: 1.4;
+  margin-bottom: 20px; }
+.content a {
+  color: #c00; }
+  .content a:hover {
+    color: #cc0; }
+.content ol {
+  list-style: decimal; }
+
+/* ----- navigations ----- */
+nav.main ul {
+  background-color: #ccc; }
+  nav.main ul:after {
+    content: "";
+    display: table;
+    clear: both; }
+  nav.main ul ul {
+    display: none; }
+nav.main li {
+  float: left; }
+nav.main a {
+  padding: 0 15px;
+  line-height: 40px; }
+
+/* ----- fonts ----- */
+/* ----- layout ----- */
+.container {
+  max-width: 1044px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 60px; }
+  .container:after {
+    content: "";
+    display: table;
+    clear: both; }
+
+.column-4 {
+  float: left;
+  display: block;
+  margin-right: 5.74713%;
+  width: 29.50192%; }
+  .column-4:last-child {
+    margin-right: 0; }
+
+/* ----- forms ----- */
+form input[type=text] {
+  background-color: #eee; }
+
+/* ----- header ----- */
+/* ----- content ----- */
+/* ----- footer ----- */
+/* ----- images ----- */
+.featured-image {
+  width: 100%;
+  height: auto; }
+
+.thumbnail {
+  float: left;
+  display: block;
+  margin-right: 5.74713%;
+  width: 20.68966%; }
+  .thumbnail:last-child {
+    margin-right: 0; }
+
+/* === RWD === */
+@media only screen and (max-width: 1084px) {
+  /* ----- tablet big ----- */ }
+@media only screen and (max-width: 768px) {
+  /* ----- tablet small ----- */ }
+@media only screen and (max-width: 480px) {
+  /* ----- mobile big ----- */ }
+@media only screen and (max-width: 320px) {
+  /* ----- mobile small ----- */ }

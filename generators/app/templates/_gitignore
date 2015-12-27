@@ -1,0 +1,11 @@
+vendor
+.env
+composer.lock
+public/.htaccess
+public/wp
+public/content/cache
+public/content/uploads
+public/content/upgrade
+public/content/smarty
+public/content/plugins
+public/content/themes/<%= themeName %>/assets/bourbon
