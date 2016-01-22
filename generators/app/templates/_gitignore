@@ -8,4 +8,4 @@ public/content/uploads
 public/content/upgrade
 public/content/smarty
 public/content/plugins
-public/content/themes/<%= themeName %>/assets/bourbon
+public/content/themes/<%= themeName %>/assets/bower

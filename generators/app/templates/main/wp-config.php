@@ -64,8 +64,3 @@ if (getenv('DEBUG')) {
 	define('WP_DEBUG', false);
 	define('CP_DEV', false);
 }
-
-// ===================
-// Bootstrap WordPress
-// ===================
-require_once( ABSPATH . 'wp-settings.php' );

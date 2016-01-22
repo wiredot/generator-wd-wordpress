@@ -3,6 +3,10 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
+
 module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
@@ -15,22 +19,22 @@ module.exports = yeoman.generators.Base.extend({
     var prompts = [{
       name: 'themeName',
       message: 'Theme name',
-      default : this.appname
+      default : replaceAll(this.appname, ' ', '.')
     },
     {
       name: 'themeDir',
       message: 'Theme directory',
-      default : this.appname
+      default : replaceAll(this.appname, ' ', '.')
     },
     {
       name: 'themeUrl',
       message: 'Theme Url',
-      default : this.appname
+      default : replaceAll(this.appname, ' ', '.')
     },
     {
       name: 'dbDatabase',
       message: 'Database name',
-      default : this.appname
+      default : replaceAll(this.appname, ' ', '_')
     },
     {
       name: 'dbUsername',
@@ -111,10 +115,10 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    //this.spawnCommand('composer', ['install']);
+    this.spawnCommand('composer', ['install']);
     if (this.props.gitInit) {
       this.spawnCommand('git', ['init']);
     }
-    //this.bowerInstall();
+    this.bowerInstall();
   }
 });
