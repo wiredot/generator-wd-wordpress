@@ -13,7 +13,7 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the hunky-dory ' + chalk.red('generator-wd-wordpress') + ' generator!'
+      'Welcome to the awesome ' + chalk.red('WireDot WordPress') + ' Generator!'
     ));
 
     var prompts = [{
@@ -79,34 +79,48 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: function () {
     this.fs.copy(
-      this.templatePath('skeleton'),
+      this.templatePath('skeleton/**/*'),
       this.destinationPath('')
     );
 
     this.fs.copy(
-      this.templatePath('theme'),
-      this.destinationPath('public/content/themes/' + this.props.themeName)
+      this.templatePath('theme/**/*'),
+      this.destinationPath('public/content/themes/' + this.props.themeDir)
     );
 
      this.fs.copyTpl(
       this.templatePath('skeleton/_gitignore'),
       this.destinationPath('.gitignore'),
-      {themeName: this.props.themeName}
+      {
+        themeDir: this.props.themeDir
+      }
+    );
+
+     this.fs.copyTpl(
+      this.templatePath('skeleton/bower.json'),
+      this.destinationPath('bower.json'),
+      {
+        themeName: this.props.themeName
+      }
     );
 
      this.fs.copyTpl(
       this.templatePath('theme/style.css'),
-      this.destinationPath('public/content/themes/' + this.props.themeName + '/style.css'),
-      {themeName: this.props.themeName}
+      this.destinationPath('public/content/themes/' + this.props.themeDir + '/style.css'),
+      {
+        themeName: this.props.themeName,
+        themeDescription: this.props.themeDescription,
+        themeUrl: this.props.themeUrl,
+      }
     );
 
      this.fs.copyTpl(
       this.templatePath('skeleton/.bowerrc'),
       this.destinationPath('.bowerrc'),
-      {themeName: this.props.themeName}
+      {themeDir: this.props.themeDir}
     );
 
-     this.fs.copyTpl(
+    this.fs.copyTpl(
       this.templatePath('skeleton/.env'),
       this.destinationPath('.env'),
       {
@@ -121,7 +135,7 @@ module.exports = yeoman.generators.Base.extend({
 
   install: function () {
     this.spawnCommand('composer', ['install']);
-    this.spawnCommand('bower', ['install']);
+    this.spawnCommand('bower', ['update']);
     if (this.props.gitInit) {
       this.spawnCommand('git', ['init']);
     }
