@@ -27,6 +27,11 @@ module.exports = yeoman.generators.Base.extend({
       default : replaceAll(this.appname, ' ', '.')
     },
     {
+      name: 'themeDescription',
+      message: 'Theme description',
+      default : replaceAll(this.appname, ' ', '.')
+    },
+    {
       name: 'themeUrl',
       message: 'Theme Url',
       default : replaceAll(this.appname, ' ', '.')
@@ -74,7 +79,7 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: function () {
     this.fs.copy(
-      this.templatePath('main'),
+      this.templatePath('skeleton'),
       this.destinationPath('')
     );
 
@@ -84,25 +89,25 @@ module.exports = yeoman.generators.Base.extend({
     );
 
      this.fs.copyTpl(
-      this.templatePath('_gitignore'),
+      this.templatePath('skeleton/_gitignore'),
       this.destinationPath('.gitignore'),
       {themeName: this.props.themeName}
     );
 
      this.fs.copyTpl(
-      this.templatePath('style.css'),
+      this.templatePath('theme/style.css'),
       this.destinationPath('public/content/themes/' + this.props.themeName + '/style.css'),
       {themeName: this.props.themeName}
     );
 
      this.fs.copyTpl(
-      this.templatePath('.bowerrc'),
+      this.templatePath('skeleton/.bowerrc'),
       this.destinationPath('.bowerrc'),
       {themeName: this.props.themeName}
     );
 
      this.fs.copyTpl(
-      this.templatePath('.env'),
+      this.templatePath('skeleton/.env'),
       this.destinationPath('.env'),
       {
           dbDatabase: this.props.dbDatabase,
@@ -116,6 +121,7 @@ module.exports = yeoman.generators.Base.extend({
 
   install: function () {
     this.spawnCommand('composer', ['install']);
+    this.spawnCommand('bower', ['install']);
     if (this.props.gitInit) {
       this.spawnCommand('git', ['init']);
     }

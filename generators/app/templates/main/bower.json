@@ -1,9 +1,0 @@
-{
-    "name":  "wp-starter",
-    "dependencies": {
-        "bourbon": "latest",
-        "neat": "latest",
-        "wd-reset": "latest",
-        "jquery": "1.11.x"
-    }
-}
