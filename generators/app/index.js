@@ -7,6 +7,17 @@ function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
 
+function makeSalt() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-;:<>,./?|";
+
+    for ( var i=0; i < 64; i++ ) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
+}
+
 module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
@@ -29,7 +40,7 @@ module.exports = yeoman.generators.Base.extend({
     {
       name: 'themeDescription',
       message: 'Theme description',
-      default : replaceAll(this.appname, ' ', '.')
+      default : 'Theme for ' + replaceAll(this.appname, ' ', '.')
     },
     {
       name: 'themeUrl',
@@ -88,7 +99,7 @@ module.exports = yeoman.generators.Base.extend({
       this.destinationPath('public/content/themes/' + this.props.themeDir)
     );
 
-     this.fs.copyTpl(
+    this.fs.copyTpl(
       this.templatePath('skeleton/_gitignore'),
       this.destinationPath('.gitignore'),
       {
@@ -96,7 +107,9 @@ module.exports = yeoman.generators.Base.extend({
       }
     );
 
-     this.fs.copyTpl(
+    this.fs.delete('_gitignore');
+
+    this.fs.copyTpl(
       this.templatePath('skeleton/bower.json'),
       this.destinationPath('bower.json'),
       {
@@ -104,20 +117,27 @@ module.exports = yeoman.generators.Base.extend({
       }
     );
 
-     this.fs.copyTpl(
-      this.templatePath('theme/style.css'),
-      this.destinationPath('public/content/themes/' + this.props.themeDir + '/style.css'),
+    this.fs.copyTpl(
+      this.templatePath('skeleton/wp-config.php'),
+      this.destinationPath('wp-config.php'),
       {
-        themeName: this.props.themeName,
-        themeDescription: this.props.themeDescription,
-        themeUrl: this.props.themeUrl,
+        authKey: makeSalt(),
+        secureAuthKey: makeSalt(),
+        loggedInKey: makeSalt(),
+        nonceKey: makeSalt(),
+        authSalt: makeSalt(),
+        secureAuthSalt: makeSalt(),
+        loggedInSalt: makeSalt(),
+        nonceSalt: makeSalt()
       }
     );
 
      this.fs.copyTpl(
       this.templatePath('skeleton/.bowerrc'),
       this.destinationPath('.bowerrc'),
-      {themeDir: this.props.themeDir}
+      {
+        themeDir: this.props.themeDir
+      }
     );
 
     this.fs.copyTpl(
@@ -129,6 +149,24 @@ module.exports = yeoman.generators.Base.extend({
           dbPassword: this.props.dbPassword,
           dbHost: this.props.dbHost,
           dbPrefix: this.props.dbPrefix
+      }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('theme/style.css'),
+      this.destinationPath('public/content/themes/' + this.props.themeDir + '/style.css'),
+      {
+        themeName: this.props.themeName,
+        themeDescription: this.props.themeDescription,
+        themeUrl: this.props.themeUrl
+      }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('theme/src/scss/style.scss'),
+      this.destinationPath('public/content/themes/' + this.props.themeDir + '/src/scss/style.scss'),
+      {
+        themeName: this.props.themeName
       }
     );
   },
