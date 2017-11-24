@@ -25,7 +25,7 @@ module.exports = yeoman.generators.Base.extend({
 
 		// Have Yeoman greet the user.
 		this.log(yosay(
-			'Welcome to the awesome ' + chalk.red('WireDot WordPress') + ' Generator!'
+			'Welcome to the awesome ' + chalk.red('WireDot WordPress') + ' Generator! v1.1.1'
 		));
 
 		var prompts = [{
@@ -122,6 +122,14 @@ module.exports = yeoman.generators.Base.extend({
 		);
 
 		this.fs.copyTpl(
+			this.templatePath('copernicus-blank/package.json'),
+			this.destinationPath('package.json'),
+			{
+				themeName: this.props.themeName
+			}
+		);
+
+		this.fs.copyTpl(
 			this.templatePath('copernicus-blank/wp-config.php'),
 			this.destinationPath('wp-config.php'),
 			{
@@ -176,11 +184,11 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	install: function () {
-		this.spawnCommand('composer', ['install']);
-		this.spawnCommand('bower', ['update']);
 		if (this.props.gitInit) {
 			this.spawnCommand('git', ['init']);
 		}
+		this.spawnCommand('composer', ['install']);
 		this.bowerInstall();
+		this.npmInstall();
 	}
 });
