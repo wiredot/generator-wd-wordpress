@@ -1,3 +1,0 @@
-[submodule "generators/app/templates/skeleton"]
-	path = generators/app/templates/skeleton
-	url = https://github.com/wiredot/WordPress-Skeleton.git
