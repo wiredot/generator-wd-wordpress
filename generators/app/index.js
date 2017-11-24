@@ -167,7 +167,7 @@ module.exports = yeoman.generators.Base.extend({
 		);
 
 		this.fs.copyTpl(
-			this.templatePath('copernicus-blank/public/content/themes/copernicus-blank//src/scss/style.scss'),
+			this.templatePath('copernicus-blank/public/content/themes/copernicus-blank/src/scss/style.scss'),
 			this.destinationPath('public/content/themes/' + this.props.themeDir + '/src/scss/style.scss'),
 			{
 				themeName: this.props.themeName
