@@ -78,6 +78,12 @@ module.exports = yeoman.generators.Base.extend({
 			name: 'gitInit',
 			message: 'Init Git?',
 			default : true
+		},
+		{
+			type: 'confirm',
+			name: 'npmInit',
+			message: 'Init npm packages?',
+			default : true
 		}];
 
 		this.prompt(prompts, function (props) {
@@ -125,7 +131,8 @@ module.exports = yeoman.generators.Base.extend({
 			this.templatePath('copernicus-blank/package.json'),
 			this.destinationPath('package.json'),
 			{
-				themeName: this.props.themeName
+				themeName: this.props.themeName,
+				themeDescription: this.props.themeDescription
 			}
 		);
 
@@ -189,6 +196,8 @@ module.exports = yeoman.generators.Base.extend({
 		}
 		this.spawnCommand('composer', ['install']);
 		this.bowerInstall();
-		this.npmInstall();
+		if (this.props.npmInit) {
+			this.npmInstall();
+		}
 	}
 });
