@@ -31,13 +31,8 @@ module.exports = yeoman.generators.Base.extend({
 
 	writing: function () {
 		this.fs.copy(
-			this.templatePath('lib/*'),
-			this.destinationPath('public/content/themes/' + this.props.themeDir + '/lib/')
-		);
-
-		this.fs.copy(
-			this.templatePath('templates/*'),
-			this.destinationPath('public/content/themes/' + this.props.themeDir + '/templates/')
+			this.templatePath('**/*'),
+			this.destinationPath('public/content/themes/' + this.props.themeDir + '/')
 		);
 	},
 
