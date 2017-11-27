@@ -1,0 +1,8 @@
+<div class="newsletter">
+	<h4>{'Newsletter'|translate:newsletter}</h4>
+	<form action="{ajax}?action=wd_newsletter" class="newsletter wdForm" method="POST">
+		<input type="email" name="email" placeholder="{'Your E-mail'|translate:newsletter}">
+		<button>{'sign up'|translate:newsletter}</button>
+		{wp_nonce_field action=newsletter_nonce name=newsletter_signup}
+	</form>
+</div>
