@@ -1,0 +1,33 @@
+<div class="container">
+	<article class="big">
+		<h1>{the_title}</h1>
+		<div class="txt">
+			{the_content html=1}
+		</div>
+		<div class="media">
+			<ul>
+			{loop name=gallery}
+				<li>
+					<div class="pic">
+						<a href="{get_permalink}">
+							{image id={get_post_thumbnail_id} w=200 h=140 zc=1 q=95 alt={the_title}}
+						</a>
+					</div><div class="desc txt">
+						<a href="{get_permalink}">
+							<h3>{the_title}</h3>
+							{the_terms taxonomy=community id={the_id} assign=communities}
+							{if $communities}
+								<h4>{foreach from=$communities item=community name=br}{$community.name}{if !$smarty.foreach.br.last} {/if}{/foreach}</h4>
+							{/if}
+						</a>
+						{the_content html=1 excerpt=1}
+					</div>
+				</li>
+			{/loop}
+			</ul>
+		</div>
+	</article>
+	<aside class="small">
+		{include file='_aside.html'}
+	</aside>
+</div>

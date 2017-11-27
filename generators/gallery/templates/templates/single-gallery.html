@@ -1,0 +1,22 @@
+<div class="container">
+	<article class="full">
+		<h1>{the_title}</h1>
+		<div class="txt">
+			{the_content html=1}
+		</div>
+		{post_meta key="images" assign="images"}
+		{if $images}
+			<div class="single-gallery-container">
+				<ul>
+					{foreach from=$images item=image}
+						<li class="grid-item" >
+							<a data-fancybox="gal{the_id}" href="{image id=$image w=1000 q=95 title={the_title id=$image} link=1}" data-caption="{the_excerpt id=$image}">
+							{image id=$image w=250 q=95 title={the_excerpt id=$image}}
+							</a>
+						</li>
+					{/foreach}
+				</ul>
+			</div>
+		{/if}
+	</article>
+</div>
