@@ -12,14 +12,14 @@ $cp_config['cpt']['gallery'] = array(
 		'query_var' => true,
 		'capability_type' => 'page',
 		'hierarchial' => true,
-		'rewrite' => array( 'slug' => 'galerie' ),
+		'rewrite' => array( 'slug' => 'gallery' ),
 		'orderby' => 'date',
 		'order' => 'DESC',
 		'menu_icon' => '',
 		'menu_icon_id' => '232',
 	),
 	'labels' => array(
-		'name' => __cp( 'Galleries', 'gallery' ),
+		'name' => __cp( 'Gallery', 'gallery' ),
 		'singular_name' => __cp( 'Gallery', 'gallery' ),
 		'add_new' => __cp( 'Add New', 'gallery' ),
 		'add_new_item' => __cp( 'Add New Gallery', 'gallery' ),
@@ -60,12 +60,6 @@ $cp_config['mb']['gallery_mb_1'] = array(
 			'type' => 'upload',
 			'multiple' => true,
 			'filetype' => 'image', // image, file, video
-			'attributes' => array(
-				'autofocus' => false,
-				'disabled' => false,
-				'required' => false,
-				'size' => '1',
-			),
 			'labels' => array(
 				'button' => __cp( 'Add Photos', 'gallery' ),
 				'button_window' => __cp( 'Add Photos', 'gallery' ),
@@ -87,21 +81,11 @@ $cp_config['alv'][] = array(
 	'fields' => array(
 		'featured_image',
 		'title',
-		'taxonomy:gallery_cat',
+		'date',
 	),
 );
 
 /* ----------- Loops -------------- */
-
-$cp_config['loop'][] = array(
-	'name' => 'gallery_home',
-	'args' => array(
-		'post_type' => 'gallery',
-		'posts_per_page' => 3,
-		'orderby' => 'date',
-		'order' => 'DESC',
-	),
-);
 
 $cp_config['loop'][] = array(
 	'name' => 'gallery',
