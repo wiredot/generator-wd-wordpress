@@ -102,10 +102,27 @@ module.exports = yeoman.generators.Base.extend({
 			})
 		);
 
-		this.fs.copy(
+		this.fs.copyTpl(
 			this.templatePath('copernicus-blank/**/*'),
 			this.destinationPath(''), {
-				themeDir: this.props.themeDir
+				themeName: this.props.themeName,
+				themeDir: this.props.themeDir,
+				themeDescription: this.props.themeDescription,
+				themeUrl: this.props.themeUrl,
+				authKey: makeSalt(),
+				secureAuthKey: makeSalt(),
+				loggedInKey: makeSalt(),
+				nonceKey: makeSalt(),
+				authSalt: makeSalt(),
+				secureAuthSalt: makeSalt(),
+				loggedInSalt: makeSalt(),
+				nonceSalt: makeSalt(),
+				dbDatabase: this.props.dbDatabase,
+				dbUsername: this.props.dbUsername,
+				dbPassword: this.props.dbPassword,
+				dbHost: this.props.dbHost,
+				dbPrefix: this.props.dbPrefix,
+				error_message: '<%= error.message %>'
 			}
 		);
 
@@ -119,36 +136,9 @@ module.exports = yeoman.generators.Base.extend({
 
 		this.fs.delete('_gitignore');
 
-		this.fs.copyTpl(
-			this.templatePath('copernicus-blank/bower.json'),
-			this.destinationPath('bower.json'),
-			{
-				themeName: this.props.themeName
-			}
-		);
-
-		this.fs.copyTpl(
-			this.templatePath('copernicus-blank/package.json'),
-			this.destinationPath('package.json'),
-			{
-				themeName: this.props.themeName,
-				themeDescription: this.props.themeDescription
-			}
-		);
-
-		this.fs.copyTpl(
-			this.templatePath('copernicus-blank/wp-config.php'),
-			this.destinationPath('wp-config.php'),
-			{
-				authKey: makeSalt(),
-				secureAuthKey: makeSalt(),
-				loggedInKey: makeSalt(),
-				nonceKey: makeSalt(),
-				authSalt: makeSalt(),
-				secureAuthSalt: makeSalt(),
-				loggedInSalt: makeSalt(),
-				nonceSalt: makeSalt()
-			}
+		this.fs.copy(
+			this.templatePath('copernicus-blank/public/.htaccess'),
+			this.destinationPath('public/.htaccess')
 		);
 
 		this.fs.copyTpl(
@@ -170,24 +160,6 @@ module.exports = yeoman.generators.Base.extend({
 				dbPrefix: this.props.dbPrefix
 			}
 		);
-
-		this.fs.copyTpl(
-			this.templatePath('copernicus-blank/public/content/themes/copernicus-blank/style.css'),
-			this.destinationPath('public/content/themes/' + this.props.themeDir + '/style.css'),
-			{
-				themeName: this.props.themeName,
-				themeDescription: this.props.themeDescription,
-				themeUrl: this.props.themeUrl
-			}
-		);
-
-		this.fs.copyTpl(
-			this.templatePath('copernicus-blank/public/content/themes/copernicus-blank/src/scss/style.scss'),
-			this.destinationPath('public/content/themes/' + this.props.themeDir + '/src/scss/style.scss'),
-			{
-				themeName: this.props.themeName
-			}
-		);
 	},
 
 	install: function () {
@@ -198,6 +170,7 @@ module.exports = yeoman.generators.Base.extend({
 		this.bowerInstall();
 		if (this.props.npmInit) {
 			this.npmInstall();
+			this.spawnCommand('gulp');
 		}
 	}
 });
