@@ -21,6 +21,12 @@ module.exports = yeoman.generators.Base.extend({
 			name: 'themeDir',
 			message: 'Theme directory',
 			default : replaceAll(this.appname, ' ', '.')
+		},
+		{
+			type: 'confirm',
+			name: 'fancyboxInit',
+			message: 'Include Fancybox?',
+			default : true
 		}];
 
 		this.prompt(prompts, function (props) {
@@ -35,38 +41,42 @@ module.exports = yeoman.generators.Base.extend({
 			this.destinationPath('public/content/themes/' + this.props.themeDir + '/')
 		);
 
-		this.fs.copy(
-			this.destinationPath('public/content/themes/' + this.props.themeDir + '/config/css.config.php'), 
-			this.destinationPath('public/content/themes/' + this.props.themeDir + '/config/css.config.php'), 
-			{
-				process: function(content) {
-					var regEx = new RegExp('\'style\' => \'assets/css/style.css\',', 'g');
-					var newContent = content.toString().replace(regEx, '\'fancybox\' => \'assets/bower/fancybox/dist/jquery.fancybox.css\',' + 
-						'\n\t\t' +
-						'\'style\' => \'assets/css/style.css\','
-						);
-					return newContent;
+		if (this.props.fancyboxInit) {
+			this.fs.copy(
+				this.destinationPath('public/content/themes/' + this.props.themeDir + '/config/css.config.php'), 
+				this.destinationPath('public/content/themes/' + this.props.themeDir + '/config/css.config.php'), 
+				{
+					process: function(content) {
+						var regEx = new RegExp('\'style\' => \'assets/css/style.css\',', 'g');
+						var newContent = content.toString().replace(regEx, '\'fancybox\' => \'assets/bower/fancybox/dist/jquery.fancybox.css\',' + 
+							'\n\t\t' +
+							'\'style\' => \'assets/css/style.css\','
+							);
+						return newContent;
+					}
 				}
-			}
-		);
+			);
 
-		this.fs.copy(
-			this.destinationPath('public/content/themes/' + this.props.themeDir + '/config/js.config.php'), 
-			this.destinationPath('public/content/themes/' + this.props.themeDir + '/config/js.config.php'), 
-			{
-				process: function(content) {
-					var regEx = new RegExp('\'script\' => \'assets/js/script.js\',', 'g');
-					var newContent = content.toString().replace(regEx, '\'fancybox\' => \'assets/bower/fancybox/dist/jquery.fancybox.js\',' + 
-						'\n\t\t' +
-						'\'script\' => \'assets/js/script.js\','
-						);
-					return newContent;
+			this.fs.copy(
+				this.destinationPath('public/content/themes/' + this.props.themeDir + '/config/js.config.php'), 
+				this.destinationPath('public/content/themes/' + this.props.themeDir + '/config/js.config.php'), 
+				{
+					process: function(content) {
+						var regEx = new RegExp('\'script\' => \'assets/js/script.js\',', 'g');
+						var newContent = content.toString().replace(regEx, '\'fancybox\' => \'assets/bower/fancybox/dist/jquery.fancybox.js\',' + 
+							'\n\t\t' +
+							'\'script\' => \'assets/js/script.js\','
+							);
+						return newContent;
+					}
 				}
-			}
-		);
+			);
+		}
 	},
 
 	install: function () {
-		this.bowerInstall('fancybox --save');
+		if (this.props.fancyboxInit) {
+			this.bowerInstall('fancybox --save');
+		}
 	}
 });
