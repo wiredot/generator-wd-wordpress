@@ -1,0 +1,70 @@
+.gallery {
+
+	li {
+		@include grid-collapse($main-grid);
+		@include grid-container;
+		margin-bottom: $gutter;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		@include grid-media($main-grid-tablet) {
+			@include grid-collapse($main-grid-tablet);
+		}
+
+		@include grid-media($main-grid-mobile) {
+			@include grid-collapse($main-grid-mobile);
+		}
+	}
+
+	.photo {
+		@include grid-column(3, $sub-grid);
+		display: block;
+
+		@include grid-media($main-grid-tablet) {
+			@include grid-column(2, $sub-grid-tablet);
+		}
+
+		@include grid-media($main-grid-mobile) {
+			@include grid-column(8, $sub-grid-mobile);
+		}
+	}
+
+	.info {
+		@include grid-column(5, $sub-grid);
+
+		@include grid-media($main-grid-tablet) {
+			@include grid-column(6, $sub-grid-tablet);
+		}
+
+		@include grid-media($main-grid-mobile) {
+			@include grid-column(8, $sub-grid-mobile);
+		}
+	}
+
+	img {
+		width: 100%;
+		height: auto;
+	}
+}
+
+.single-gallery {
+
+	.quarter {
+		margin-bottom: $gutter;
+
+		@include grid-media($main-grid-tablet) {
+			@include grid-column(4);
+		}
+
+		@include grid-media($main-grid-mobile) {
+			@include grid-column(6);
+		}
+	}
+
+	img {
+		width: 100%;
+		height: auto;
+	}
+}
