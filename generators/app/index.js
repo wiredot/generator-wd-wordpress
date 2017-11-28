@@ -170,6 +170,11 @@ module.exports = yeoman.generators.Base.extend({
 		this.bowerInstall();
 		if (this.props.npmInit) {
 			this.npmInstall();
+		}
+	},
+
+	end: function () {
+		if (this.props.npmInit) {
 			this.spawnCommand('gulp');
 		}
 	}
