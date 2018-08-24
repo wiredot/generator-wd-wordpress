@@ -1,34 +1,17 @@
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
-var rename = require("gulp-rename");
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const rename = require("gulp-rename");
 
-function replaceAll(str, find, replace) {
-	return str.replace(new RegExp(find, 'g'), replace);
-}
+module.exports = class extends Generator {
+  prompting() {
+	// Have Yeoman greet the user.
+	this.log(
+	  yosay(`Welcome to the kryptonian ${chalk.red('generator-wp-wordpress')} generator!`)
+	);
 
-function makeSalt() {
-	var text = "";
-	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-;:<>,./?|";
-
-	for ( var i=0; i < 64; i++ ) {
-		text += possible.charAt(Math.floor(Math.random() * possible.length));
-	}
-
-	return text;
-}
-
-module.exports = yeoman.generators.Base.extend({
-	prompting: function () {
-		var done = this.async();
-
-		// Have Yeoman greet the user.
-		this.log(yosay(
-			'Welcome to the awesome ' + chalk.red('WireDot WordPress') + ' Generator! v1.1.1'
-		));
-
-		var prompts = [{
+	const prompts = [{
 			name: 'themeName',
 			message: 'Theme name',
 			default : replaceAll(this.appname, ' ', '.')
@@ -72,37 +55,24 @@ module.exports = yeoman.generators.Base.extend({
 			name: 'dbPrefix',
 			message: 'Database Prefix',
 			default : 'wp' + ( Math.floor( Math.random() * 999 ) + 1 ) + '_'
-		},
-		{
-			type: 'confirm',
-			name: 'gitInit',
-			message: 'Init Git?',
-			default : true
-		},
-		{
-			type: 'confirm',
-			name: 'npmInit',
-			message: 'Init npm packages?',
-			default : true
 		}];
 
-		this.prompt(prompts, function (props) {
-			this.props = props;
+	return this.prompt(prompts).then(props => {
+	  // To access props later use this.props.someAnswer;
+	  this.props = props;
+	});
+  }
 
-			done();
-		}.bind(this));
-	},
+  writing() {
+	const THAT = this;
+	this.registerTransformStream(
+		rename(function(path) {
+			path.basename = path.basename.replace(/(copernicus-blank)/g, THAT.props.themeDir);
+			path.dirname = path.dirname.replace(/(copernicus-blank)/g, THAT.props.themeDir);
+		})
+	);
 
-	writing: function () {
-		var THAT = this;
-		this.registerTransformStream(
-			rename(function(path) {
-				path.basename = path.basename.replace(/(copernicus-blank)/g, THAT.props.themeDir);
-				path.dirname = path.dirname.replace(/(copernicus-blank)/g, THAT.props.themeDir);
-			})
-		);
-
-		this.fs.copyTpl(
+	this.fs.copyTpl(
 			this.templatePath('copernicus-blank/**/*'),
 			this.destinationPath(''), {
 				themeName: this.props.themeName,
@@ -122,7 +92,7 @@ module.exports = yeoman.generators.Base.extend({
 				dbPassword: this.props.dbPassword,
 				dbHost: this.props.dbHost,
 				dbPrefix: this.props.dbPrefix,
-				error_message: '<%= error.message %>'
+				error_message: '%= error.message %'
 			}
 		);
 
@@ -134,19 +104,16 @@ module.exports = yeoman.generators.Base.extend({
 			}
 		);
 
+		this.fs.copy(
+			this.templatePath('copernicus-blank/public/content/themes/copernicus-blank/assets/.yarnrc'),
+			this.destinationPath('public/content/themes/test.com/assets/.yarnrc')
+		);
+
 		this.fs.delete('_gitignore');
 
 		this.fs.copy(
 			this.templatePath('copernicus-blank/public/.htaccess'),
 			this.destinationPath('public/.htaccess')
-		);
-
-		this.fs.copyTpl(
-			this.templatePath('copernicus-blank/.bowerrc'),
-			this.destinationPath('.bowerrc'),
-			{
-				themeDir: this.props.themeDir
-			}
 		);
 
 		this.fs.copyTpl(
@@ -160,22 +127,31 @@ module.exports = yeoman.generators.Base.extend({
 				dbPrefix: this.props.dbPrefix
 			}
 		);
-	},
+  }
 
-	install: function () {
-		if (this.props.gitInit) {
-			this.spawnCommand('git', ['init']);
-		}
-		this.spawnCommand('composer', ['install']);
-		this.bowerInstall();
-		if (this.props.npmInit) {
-			this.npmInstall();
-		}
-	},
+  install() {
+	this.spawnCommand('git', ['init']);
+	this.spawnCommand('composer', ['install']);
+	this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/test.com/assets']);
+	this.yarnInstall();
+  }
 
-	end: function () {
-		if (this.props.npmInit) {
-			this.spawnCommand('gulp');
-		}
+  end() {
+	this.spawnCommand('gulp');
+  }
+};
+
+function replaceAll(str, find, replace) {
+	return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function makeSalt() {
+	var text = "";
+	var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-;:<>,./?|";
+
+	for ( var i=0; i < 64; i++ ) {
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
 	}
-});
+
+	return text;
+}
