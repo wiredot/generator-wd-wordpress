@@ -1,0 +1,16 @@
+vendor
+.env
+composer.lock
+public/wp
+public/content/cache
+public/content/languages
+public/content/plugins
+public/content/smarty
+public/content/upgrade
+public/content/uploads
+public/content/themes/<%= themeDir %>/assets/lib
+/Movefile
+/.gulp
+/node_modules
+*.map
+yarn.lock
