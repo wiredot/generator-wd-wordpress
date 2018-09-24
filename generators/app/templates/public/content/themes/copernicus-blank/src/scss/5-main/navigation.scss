@@ -1,0 +1,41 @@
+.navigation {
+	display: flex;
+
+	li {
+		margin-left: 25px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+
+	a {
+		color: #fff;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.current-menu-item {
+
+		a {
+			text-decoration: underline;
+		}
+	}
+}
+
+.social {
+
+	svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.strava {
+
+		svg {
+			width: 13px;
+		}
+	}
+}

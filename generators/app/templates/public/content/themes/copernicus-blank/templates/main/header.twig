@@ -1,0 +1,9 @@
+<header class="header-main" style="background-image: url('{% if is_single() %}{{ the_post_thumbnail_url('featured-image') }}{% else %}{{ header_image() }}{% endif %}');">
+	<div class="nav-bar">
+		<nav>
+			<a href="{{ home_url() }}" class="logo">{{ svg( get_template_directory_uri() ~ '/assets/svg/svg.svg#logo')|raw }}</a>
+			{{ wp_nav_menu( {'theme_location': 'main', 'container': 'ul', 'menu_class': 'main-navigation navigation'} ) }}
+			{{ get_template_part('elements/social-navigation') }}
+		</nav>
+	</div>
+</header>

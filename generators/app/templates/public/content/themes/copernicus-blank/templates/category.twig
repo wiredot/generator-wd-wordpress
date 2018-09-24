@@ -1,0 +1,23 @@
+{% extends 'layouts/one-column.twig' %}
+{% block header_title %}
+	<h1>{{ single_cat_title() }}</h1>asd
+{% endblock %}
+{% block content %}
+	<div class="blog-rm">
+		{% loop %}
+			<div class="blog-rm-item">
+				<a href="{{ get_permalink() }}" class="img">
+					{{ the_post_thumbnail('blog-thumbnail') }}
+				</a>
+				<div class="text">
+					<a href="{{ get_permalink() }}">
+						<h3>{{ the_title() }}</h3>
+					</a>
+				</div>
+			</div>
+		{% endloop %}
+	</div>
+	<div class="pagination">
+		{{ paginate_links() }}
+	</div>
+{% endblock %}

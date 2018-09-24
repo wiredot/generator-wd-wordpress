@@ -1,0 +1,40 @@
+.gutenberg > .wp-block-image {
+	@extend .gutenberg-block;
+
+	&.alignwide {
+		@include grid-column( 10, $main-grid );
+		@include grid-shift( 1, $main-grid );
+
+		@include grid-media($main-grid-tablet) {
+			@include grid-column( 10, $main-grid-tablet );
+			@include grid-shift( 1, $main-grid-tablet );
+		}
+
+		@include grid-media($main-grid-mobile) {
+			@include grid-column( 12, $main-grid-mobile );
+			@include grid-shift( 0, $main-grid-mobile );
+		}
+	}
+
+	&.alignfull {
+		@include grid-column( 12, $main-grid );
+		@include grid-shift( 0, $main-grid );
+
+		@include grid-media($main-grid-tablet) {
+			@include grid-column( 12, $main-grid-tablet );
+			@include grid-shift( 0, $main-grid-tablet );
+		}
+
+		@include grid-media($main-grid-mobile) {
+			@include grid-column( 12, $main-grid-mobile );
+			@include grid-shift( 0, $main-grid-mobile );
+		}
+	}
+
+	figcaption {
+		font-size: 16px;
+		margin: 15px 0 0 0;
+		font-weight: 300;
+		color: $wdc-color-grey-3;
+	}
+}

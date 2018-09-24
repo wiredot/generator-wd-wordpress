@@ -1,0 +1,91 @@
+{% if has_category( 'rowerowy-miesiac' ) %}
+	{% set layout = 'layouts/two-columns.twig' %}
+{% else %}
+	{% set layout = 'layouts/one-column.twig' %}
+{% endif %}
+
+{% extends layout %}
+
+{% set more = get_post_meta( get_the_id(), 'more_content', true ) %}
+
+{% block aside %}
+	<ul>
+		{% for key, c in more %}
+			{% if c.title %}<li><a href="#p{{ key }}">{{ c.title }}</a></li>{% endif %}
+		{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block content %}
+	{% loop %}
+		{{ the_content() }}
+		{% for key, c in more %}
+			<div id="p{{ key }}" class="post-block">
+				{% if c.title %}<h2>{{ c.title }}</h2>{% endif %}
+				{% if c.text %}{{ apply_filters( 'the_content', c.text ) }}{% endif %}
+				{% if c.youtube %}<p><iframe width="750" height="422" src="https://www.youtube.com/embed/{{ c.youtube }}?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe></p>{% endif %}
+				{% if c.vimeo %}<p><iframe src="https://player.vimeo.com/video/{{ c.vimeo }}?color=ffffff&title=0&byline=0&portrait=0" width="750" height="422" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></p>{% endif %}
+				{% if c.iframe %}<p>{{ c.iframe|raw }}</p>{% endif %}
+				{% if c.twitter %}<p>{{ c.twitter|raw }}</p>{% endif %}
+				{% if c.image is defined and c.image %}
+					{% if count(c.image) == 1 %}
+						<figure class="wp-block-image">
+							<a href="{{ wp_get_attachment_url( c.image.0 ) }}">{{ wp_get_attachment_image( c.image.0, 'large', false, {'class':'full'} ) }}</a>
+							{% if wp_get_attachment_caption( c.image.0 ) %}<figcaption>{{ wp_get_attachment_caption( c.image.0, 'large' ) }}</figcaption>{% endif %}
+						</figure>
+					{% else %}
+						<ul class="wp-block-gallery {{ c.image_align }} columns-{% if c.image_columns %}{{ c.image_columns }}{% else %}3{% endif %} is-cropped">
+							{% for i in c.image %}
+								<li class="blocks-gallery-item">
+									<figure class="wp-block-image">
+										{% if c.image_size %}
+											<a href="{{ wp_get_attachment_url( i ) }}">{{ wp_get_attachment_image( i, c.image_size ) }}</a>
+										{% else %}
+											<a href="{{ wp_get_attachment_url( i ) }}">{{ wp_get_attachment_image( i, 'blog-thumbnail' ) }}</a>
+										{% endif %}
+									</figure>
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				{% endif %}
+			</div>
+		{% endfor %}
+		{% set photos = get_post_meta( get_the_id(), 'gallery', true ) %}
+		{% if photos %}
+			<div id="p999" class="post-block">
+				<ul class="wp-block-gallery columns-5 alignwide is-cropped no-stretch">
+					{% for photo in photos %}
+						<li class="blocks-gallery-item">
+							<figure class="wp-block-image">
+								<a href="{{ wp_get_attachment_url( photo ) }}">{{ wp_get_attachment_image( photo, 'blog-thumbnail' ) }}</a>
+							</figure>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+	{% endloop %}
+{% endblock %}
+
+{% block bottom %}
+
+{{ get_template_part('elements/newsletter') }}
+
+<h2 class="h1">Podobne wpisy</h2>
+<div class="blog-rm">
+	{% loop { 'post__not_in': [ get_the_ID() ], 'posts_per_page': 3, 'category__in': wp_get_post_categories( get_the_ID() ) } %}
+		<div class="blog-rm-item">
+			<a href="{{ get_permalink() }}" class="img">
+				{{ the_post_thumbnail('blog-thumbnail') }}
+			</a>
+			<div class="text">
+				<a href="{{ get_permalink() }}">
+					<h3>{{ the_title() }}</h3>
+				</a>
+			</div>
+		</div>
+	{% endloop %}
+</div>
+
+{% endblock %}

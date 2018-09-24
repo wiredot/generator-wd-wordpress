@@ -1,0 +1,22 @@
+$gutter: 50px;
+$gutter-tablet: 30px;
+$gutter-mobile: 20px;
+
+$main-grid: (
+	columns: 12,
+	gutter: $gutter,
+);
+
+$main-grid-tablet: (
+	columns: 12,
+	gutter: $gutter-tablet,
+	media: "(max-width: 1050px)"
+);
+
+$main-grid-mobile: (
+	columns: 12,
+	gutter: $gutter-mobile,
+	media: "(max-width: 800px)"
+);
+
+$gallery-spacing: 25px;

@@ -1,0 +1,38 @@
+.wd-form {
+	position: relative;
+}
+
+.wdAlert {
+	position: absolute;
+	bottom: 55px;
+	top: auto;
+	padding: 20px;
+	width: 60% !important;
+	left: 20%;
+
+	&.error, &.success {
+
+		p {
+			font-size: 16px;
+			margin-bottom: 0;
+		}
+
+		.title {
+			margin-bottom: 10px;
+		}
+	}
+
+	&.error {
+
+		p {
+			color: #b94a48;
+		}
+	}
+
+	&.success {
+
+		p {
+			color: #468847;
+		}
+	}
+}

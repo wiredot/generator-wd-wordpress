@@ -1,0 +1,27 @@
+.pagination {
+	text-align: center;
+	margin: 100px;
+
+	@include grid-media($main-grid-tablet) {
+		margin: 75px;
+	}
+
+	@include grid-media($main-grid-mobile) {
+		margin: 50px;
+	}
+
+	.page-numbers {
+		padding: 3px 5px;
+		min-width: 22px;
+		display: inline-block;
+		line-height: 16px;
+		text-align: center;
+		border-radius: 4px;
+		color: $wdc-color-grey-5;
+	}
+
+	.current, :hover {
+		background-color: $color-primary;
+		color: $wdc-color-white;
+	}
+}

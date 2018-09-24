@@ -1,0 +1,34 @@
+.gutenberg > .wp-block-gallery {
+	@extend .gutenberg-block;
+
+	@include wp-block-gallery-column(2);
+	@include wp-block-gallery-column(3);
+	@include wp-block-gallery-column(4);
+	@include wp-block-gallery-column(5);
+	@include wp-block-gallery-column(6);
+	@include wp-block-gallery-column(7);
+	@include wp-block-gallery-column(8);
+
+	.blocks-gallery-item {
+		margin: 0 $gallery-spacing $gallery-spacing 0;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+
+	figcaption {
+		position: absolute;
+		bottom: 0;
+		background: none;
+		color: #fff;
+		margin: 0;
+		padding: 10px;
+		font-size: 13px;
+
+		@include grid-media($main-grid-mobile) {
+			padding: 5px;
+			font-size: 12px;
+		}
+	}
+}

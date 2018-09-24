@@ -1,0 +1,9 @@
+{% extends 'layouts/one-column.twig' %}
+
+{% block content %}
+	<div class="gutenberg txt">
+		{% loop %}
+			{{ the_content() }}
+		{% endloop %}
+	</div>
+{% endblock %}

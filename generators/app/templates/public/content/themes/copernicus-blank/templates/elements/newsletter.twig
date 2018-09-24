@@ -1,0 +1,7 @@
+<div class="newsletter">
+	<h2>Newsletter</h2>
+	<p>Bądź na bieżąco</p>
+	<form action="{{ admin_url( 'admin-ajax.php' ) }}?action=cp_newsletter_signup" method="POST" class="newsletter-form wd-form">
+		<input type="email" name="email" placeholder="twój Email" class="wdc-input" required="required"><button class="wdc-button primary"><span>Zapisz</span><div class="loading"></div></button>
+	</form>
+</div>

@@ -1,0 +1,43 @@
+.footer-main {
+	@include grid-container;
+	background-color: $wdc-color-black;
+	color: $wdc-color-white;
+	padding: 33px 0;
+	
+	nav {
+		@include grid-column( 12, $main-grid );
+		display: flex;
+
+		@include grid-media($main-grid-mobile) {
+			flex-direction: column;
+			align-items: center;
+			height: auto;
+		}
+	}
+
+	.copyright {
+		font-weight: 300;
+
+		@include grid-media($main-grid-mobile) {
+			margin-bottom: 25px;
+		}
+	}
+
+	.footer-navigation, 
+	.social {
+		justify-content: flex-end;
+	}
+
+	.footer-navigation {
+		flex: 1 1 auto;
+		text-align: center;
+
+		@include grid-media($main-grid-mobile) {
+			margin-bottom: 25px;
+		}
+
+		ul {
+			justify-content: center;
+		}
+	}
+}

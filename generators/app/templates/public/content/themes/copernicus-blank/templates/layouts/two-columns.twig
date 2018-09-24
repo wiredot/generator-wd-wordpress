@@ -1,0 +1,22 @@
+{{ get_header() }}
+
+{{ get_template_part('main/header') }}
+
+<div class="two-columns">
+	<div class="aside">
+		{% block aside %}
+			asdasd
+		{% endblock %}
+	</div>
+	<div class="column-main">
+		{% block content %}
+			{% loop %}
+				{{ the_content() }}
+			{% endloop %}
+		{% endblock %}
+	</div>
+</div>
+
+{{ get_template_part('main/footer') }}
+
+{{ get_footer() }}

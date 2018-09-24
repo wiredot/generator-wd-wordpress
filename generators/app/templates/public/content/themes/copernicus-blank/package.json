@@ -1,0 +1,20 @@
+{
+  "name": "<%= themeName %>",
+  "version": "1.0.0",
+  "description": "<%= themeDescription %>",
+  "main": "index.php",
+  "license": "GPL",
+  "devDependencies": {
+    "browser-sync": "^2.24.7",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-svgmin": "^1.2.4",
+    "gulp-svgstore": "^6.1.1",
+    "path": "^0.12.7",
+    "remove-svg-properties": "^0.3.3"
+  }
+}

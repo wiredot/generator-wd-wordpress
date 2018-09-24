@@ -1,0 +1,11 @@
+@mixin wp-block-gallery-column($columns) {
+	&.columns-#{$columns} {
+		.blocks-gallery-item {
+			width: calc( 100% / #{$columns} - ( #{$gallery-spacing} * ( #{$columns} - 1 ) ) / #{$columns} );
+
+			&:nth-child(#{$columns}n) {
+				margin-right: 0;
+			}
+		}
+	}
+}

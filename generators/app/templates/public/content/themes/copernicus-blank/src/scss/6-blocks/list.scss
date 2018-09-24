@@ -1,0 +1,28 @@
+.gutenberg {
+
+	> ul,
+	> ol {
+		@extend .gutenberg-block;
+		padding-left: 45px;
+
+		ul,
+		ol {
+			margin-top: 12px;
+			padding-left: 25px;
+		}
+	}
+
+	ul {
+		list-style: disc;
+	}
+
+	ol {
+		list-style: decimal;
+	}
+
+	li {
+		font-weight: 300;
+		margin-bottom: 12px;
+		line-height: 32px;
+	}
+}

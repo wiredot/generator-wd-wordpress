@@ -1,0 +1,11 @@
+<footer class="footer-main">
+	<nav>
+		<div class="copyright">
+			© {{ "now"|date("Y") }}
+		</div>
+		<div class="footer-navigation">
+			{{ wp_nav_menu( {'theme_location': 'footer', 'container': 'ul', 'menu_class': 'navigation'} ) }}
+		</div>
+		{{ get_template_part('elements/social-navigation') }}
+	</nav>
+</footer>
