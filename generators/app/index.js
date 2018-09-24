@@ -124,6 +124,15 @@ module.exports = class extends Generator {
 			this.destinationPath('public/content/themes/' + THAT.props.themeDir + '/assets/.yarnrc')
 		);
 
+		this.fs.delete('public/content/themes/' + THAT.props.themeDir + '/gulpfile.js');
+
+		this.fs.copy(
+			this.templatePath('public/content/themes/' + THAT.props.themeDir + '/_gulpfile.js'),
+			this.destinationPath('public/content/themes/' + THAT.props.themeDir + '/gulpfile.js')
+		);
+
+		this.fs.delete('public/content/themes/' + THAT.props.themeDir + '/_gulpfile.js');
+
 		this.fs.copyTpl(
 			this.templatePath('.env'),
 			this.destinationPath('.env'),
