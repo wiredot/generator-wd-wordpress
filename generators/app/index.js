@@ -29,7 +29,7 @@ module.exports = class extends Generator {
 		{
 			name: 'themeUrl',
 			message: 'Theme Url',
-			default : replaceAll(this.appname, ' ', '.')
+			default : 'http://' + replaceAll(this.appname, ' ', '.')
 		},
 		{
 			name: 'themeLangDomain',
@@ -62,23 +62,27 @@ module.exports = class extends Generator {
 			default : 'wp' + ( Math.floor( Math.random() * 999 ) + 1 ) + '_'
 		}];
 
-	return this.prompt(prompts).then(props => {
-	  // To access props later use this.props.someAnswer;
-	  this.props = props;
-	});
-  }
+		return this.prompt(prompts).then(props => {
+		// To access props later use this.props.someAnswer;
+			this.props = props;
+		});
+	}
 
-  writing() {
-	const THAT = this;
-	this.registerTransformStream(
-		rename(function(path) {
-			path.basename = path.basename.replace(/(copernicus-blank)/g, THAT.props.themeDir);
-			path.dirname = path.dirname.replace(/(copernicus-blank)/g, THAT.props.themeDir);
-		})
-	);
+	writing() {
+		const THAT = this;
+		this.registerTransformStream(
+			rename(function(path) {
+				path.basename = path.basename.replace(/(copernicus-blank)/g, THAT.props.themeDir);
+				path.dirname = path.dirname.replace(/(copernicus-blank)/g, THAT.props.themeDir);
+			})
+		);
 
-	this.fs.copyTpl(
-			this.templatePath('**/*'),
+		this.fs.copyTpl(
+			[
+				this.templatePath('**/*'),
+				'!/**/gulpfile.js',
+				'!/**/_gulpfile.js'
+			],
 			this.destinationPath(''), {
 				themeName: this.props.themeName,
 				themeDir: this.props.themeDir,
@@ -124,14 +128,15 @@ module.exports = class extends Generator {
 			this.destinationPath('public/content/themes/' + THAT.props.themeDir + '/assets/.yarnrc')
 		);
 
-		this.fs.delete('public/content/themes/' + THAT.props.themeDir + '/gulpfile.js');
-
-		this.fs.copy(
-			this.templatePath('public/content/themes/' + THAT.props.themeDir + '/_gulpfile.js'),
-			this.destinationPath('public/content/themes/' + THAT.props.themeDir + '/gulpfile.js')
+		this.fs.copyTpl(
+			this.templatePath('public/content/themes/copernicus-blank/_gulpfile.js'),
+			this.destinationPath('public/content/themes/' + THAT.props.themeDir + '/gulpfile.js'),
+			{
+				error_message: '%= error.message %',
+				themeDir: this.props.themeDir,
+				themeUrl: this.props.themeUrl
+			}
 		);
-
-		this.fs.delete('public/content/themes/' + THAT.props.themeDir + '/_gulpfile.js');
 
 		this.fs.copyTpl(
 			this.templatePath('.env'),
@@ -144,18 +149,18 @@ module.exports = class extends Generator {
 				dbPrefix: this.props.dbPrefix
 			}
 		);
-  }
+	}
 
-  install() {
-	this.spawnCommand('git', ['init']);
-	this.spawnCommand('composer', ['install']);
-	this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir + '/assets']);
-	this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir]);
-  }
+	install() {
+		// this.spawnCommand('git', ['init']);
+		// this.spawnCommand('composer', ['install']);
+		// this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir + '/assets']);
+		// this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir]);
+	}
 
-  end() {
-	// this.spawnCommand('gulp');
-  }
+	end() {
+		// this.spawnCommand('gulp');
+	}
 };
 
 function replaceAll(str, find, replace) {
