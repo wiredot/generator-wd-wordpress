@@ -32,6 +32,11 @@ module.exports = class extends Generator {
 			default : replaceAll(this.appname, ' ', '.')
 		},
 		{
+			name: 'themeLangDomain',
+			message: 'Theme Language Domain',
+			default : replaceAll(this.appname, ' ', '.')
+		},
+		{
 			name: 'dbDatabase',
 			message: 'Database name',
 			default : replaceAll(this.appname, ' ', '_')
@@ -73,12 +78,13 @@ module.exports = class extends Generator {
 	);
 
 	this.fs.copyTpl(
-			this.templatePath('copernicus-blank/**/*'),
+			this.templatePath('**/*'),
 			this.destinationPath(''), {
 				themeName: this.props.themeName,
 				themeDir: this.props.themeDir,
 				themeDescription: this.props.themeDescription,
 				themeUrl: this.props.themeUrl,
+				themeLangDomain: this.props.themeLangDomain,
 				authKey: makeSalt(),
 				secureAuthKey: makeSalt(),
 				loggedInKey: makeSalt(),
@@ -97,27 +103,29 @@ module.exports = class extends Generator {
 		);
 
 		this.fs.copyTpl(
-			this.templatePath('copernicus-blank/_gitignore'),
+			this.templatePath('_gitignore'),
 			this.destinationPath('.gitignore'),
 			{
 				themeDir: this.props.themeDir
 			}
 		);
 
-		this.fs.copy(
-			this.templatePath('copernicus-blank/public/content/themes/copernicus-blank/assets/.yarnrc'),
-			this.destinationPath('public/content/themes/test.com/assets/.yarnrc')
-		);
-
 		this.fs.delete('_gitignore');
 
 		this.fs.copy(
-			this.templatePath('copernicus-blank/public/.htaccess'),
+			this.templatePath('public/_htaccess'),
 			this.destinationPath('public/.htaccess')
+		);
+		
+		this.fs.delete('public/_htaccess');
+
+		this.fs.copy(
+			this.templatePath('public/content/themes/copernicus-blank/assets/.yarnrc'),
+			this.destinationPath('public/content/themes/' + THAT.props.themeDir + '/assets/.yarnrc')
 		);
 
 		this.fs.copyTpl(
-			this.templatePath('copernicus-blank/.env'),
+			this.templatePath('.env'),
 			this.destinationPath('.env'),
 			{
 				dbDatabase: this.props.dbDatabase,
@@ -132,12 +140,12 @@ module.exports = class extends Generator {
   install() {
 	this.spawnCommand('git', ['init']);
 	this.spawnCommand('composer', ['install']);
-	this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/test.com/assets']);
-	this.yarnInstall();
+	this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir + '/assets']);
+	this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir]);
   }
 
   end() {
-	this.spawnCommand('gulp');
+	// this.spawnCommand('gulp');
   }
 };
 

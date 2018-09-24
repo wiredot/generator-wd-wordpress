@@ -1,11 +1,11 @@
 <?php
 
-if ( !defined( 'ABSPATH' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', dirname( __FILE__ ) . '/wp/' );
 }
 
 /** Location of your WordPress configuration. */
-require_once(dirname( __DIR__ ) . '/wp-config.php');
+require_once( dirname( __DIR__ ) . '/wp-config.php' );
 
 // ===================
 // Bootstrap WordPress
