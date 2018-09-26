@@ -152,10 +152,10 @@ module.exports = class extends Generator {
 	}
 
 	install() {
-		// this.spawnCommand('git', ['init']);
-		// this.spawnCommand('composer', ['install']);
-		// this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir + '/assets']);
-		// this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir]);
+		this.spawnCommand('git', ['init']);
+		this.spawnCommand('composer', ['install']);
+		this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir + '/assets']);
+		this.spawnCommand('yarn', ['install', '--cwd', './public/content/themes/' + this.props.themeDir]);
 	}
 
 	end() {
